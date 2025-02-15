@@ -7,11 +7,10 @@ local run = game:GetService("RunService")
 
 local Utility = {}
 local Objects = {}
+
 function Kavo:DraggingEnabled(frame, parent)
-        
     parent = parent or frame
-    
-    -- stolen from wally or kiriot, kek
+
     local dragging = false
     local dragInput, mousePos, framePos
 
@@ -20,7 +19,7 @@ function Kavo:DraggingEnabled(frame, parent)
             dragging = true
             mousePos = input.Position
             framePos = parent.Position
-            
+
             input.Changed:Connect(function()
                 if input.UserInputState == Enum.UserInputState.End then
                     dragging = false
@@ -38,7 +37,7 @@ function Kavo:DraggingEnabled(frame, parent)
     input.InputChanged:Connect(function(input)
         if input == dragInput and dragging then
             local delta = input.Position - mousePos
-            parent.Position  = UDim2.new(framePos.X.Scale, framePos.X.Offset + delta.X, framePos.Y.Scale, framePos.Y.Offset + delta.Y)
+            parent.Position = UDim2.new(framePos.X.Scale, framePos.X.Offset + delta.X, framePos.Y.Scale, framePos.Y.Offset + delta.Y)
         end
     end)
 end
@@ -47,41 +46,41 @@ function Utility:TweenObject(obj, properties, duration, ...)
     tween:Create(obj, tweeninfo(duration, ...), properties):Play()
 end
 
-
 local themes = {
     SchemeColor = Color3.fromRGB(74, 99, 135),
     Background = Color3.fromRGB(36, 37, 43),
     Header = Color3.fromRGB(28, 29, 34),
-    TextColor = Color3.fromRGB(255,255,255),
+    TextColor = Color3.fromRGB(255, 255, 255),
     ElementColor = Color3.fromRGB(32, 32, 38)
 }
+
 local themeStyles = {
     DarkTheme = {
         SchemeColor = Color3.fromRGB(64, 64, 64),
         Background = Color3.fromRGB(0, 0, 0),
         Header = Color3.fromRGB(0, 0, 0),
-        TextColor = Color3.fromRGB(255,255,255),
+        TextColor = Color3.fromRGB(255, 255, 255),
         ElementColor = Color3.fromRGB(20, 20, 20)
     },
     LightTheme = {
         SchemeColor = Color3.fromRGB(150, 150, 150),
-        Background = Color3.fromRGB(255,255,255),
+        Background = Color3.fromRGB(255, 255, 255),
         Header = Color3.fromRGB(200, 200, 200),
-        TextColor = Color3.fromRGB(0,0,0),
+        TextColor = Color3.fromRGB(0, 0, 0),
         ElementColor = Color3.fromRGB(224, 224, 224)
     },
     BloodTheme = {
         SchemeColor = Color3.fromRGB(227, 27, 27),
         Background = Color3.fromRGB(10, 10, 10),
         Header = Color3.fromRGB(5, 5, 5),
-        TextColor = Color3.fromRGB(255,255,255),
+        TextColor = Color3.fromRGB(255, 255, 255),
         ElementColor = Color3.fromRGB(20, 20, 20)
     },
     GrapeTheme = {
         SchemeColor = Color3.fromRGB(166, 71, 214),
         Background = Color3.fromRGB(64, 50, 71),
         Header = Color3.fromRGB(36, 28, 41),
-        TextColor = Color3.fromRGB(255,255,255),
+        TextColor = Color3.fromRGB(255, 255, 255),
         ElementColor = Color3.fromRGB(74, 58, 84)
     },
     Ocean = {
@@ -116,28 +115,23 @@ local themeStyles = {
         SchemeColor = Color3.fromRGB(0, 166, 58),
         Background = Color3.fromRGB(31, 41, 43),
         Header = Color3.fromRGB(22, 29, 31),
-        TextColor = Color3.fromRGB(255,255,255),
+        TextColor = Color3.fromRGB(255, 255, 255),
         ElementColor = Color3.fromRGB(22, 29, 31)
     }
 }
+
 local oldTheme = ""
-
-local SettingsT = {
-
-}
-
+local SettingsT = {}
 local Name = "KavoConfig.JSON"
 
 pcall(function()
-
-if not pcall(function() readfile(Name) end) then
-writefile(Name, game:service'HttpService':JSONEncode(SettingsT))
-end
-
-Settings = game:service'HttpService':JSONEncode(readfile(Name))
+    if not pcall(function() readfile(Name) end) then
+        writefile(Name, game:service'HttpService':JSONEncode(SettingsT))
+    end
+    Settings = game:service'HttpService':JSONEncode(readfile(Name))
 end)
 
-local LibName = tostring(math.random(1, 100))..tostring(math.random(1,50))..tostring(math.random(1, 100))
+local LibName = tostring(math.random(1, 100)) .. tostring(math.random(1, 50)) .. tostring(math.random(1, 100))
 
 function Kavo:ToggleUI()
     if game.CoreGui[LibName].Enabled then
@@ -177,21 +171,22 @@ function Kavo.CreateLib(kavName, themeList)
         elseif themeList.Header == nil then
             themeList.Header = Color3.fromRGB(28, 29, 34)
         elseif themeList.TextColor == nil then
-            themeList.TextColor = Color3.fromRGB(255,255,255)
+            themeList.TextColor = Color3.fromRGB(255, 255, 255)
         elseif themeList.ElementColor == nil then
             themeList.ElementColor = Color3.fromRGB(32, 32, 38)
         end
     end
 
     themeList = themeList or {}
-    local selectedTab 
+    local selectedTab
     kavName = kavName or "Library"
     table.insert(Kavo, kavName)
-    for i,v in pairs(game.CoreGui:GetChildren()) do
+    for i, v in pairs(game.CoreGui:GetChildren()) do
         if v:IsA("ScreenGui") and v.Name == kavName then
             v:Destroy()
         end
     end
+
     local ScreenGui = Instance.new("ScreenGui")
     local Main = Instance.new("Frame")
     local MainCorner = Instance.new("UICorner")
@@ -208,7 +203,6 @@ function Kavo.CreateLib(kavName, themeList)
     local pages = Instance.new("Frame")
     local Pages = Instance.new("Folder")
     local infoContainer = Instance.new("Frame")
-
     local blurFrame = Instance.new("Frame")
 
     Kavo:DraggingEnabled(MainHeader, Main)
@@ -276,19 +270,23 @@ function Kavo.CreateLib(kavName, themeList)
     close.Size = UDim2.new(0, 21, 0, 21)
     close.ZIndex = 2
     close.Image = "rbxassetid://3926305904"
-    close.ImageRectOffset = Vector2.new(284, 4)
-    close.ImageRectSize = Vector2.new(24, 24)
+    close.ImageRectOffset = Vector2.new(36, 364) -- Стрелка влево
+    close.ImageRectSize = Vector2.new(48, 48)
+
+    local isOpen = true
     close.MouseButton1Click:Connect(function()
-        game.TweenService:Create(close, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
-            ImageTransparency = 1
-        }):Play()
-        wait()
-        game.TweenService:Create(Main, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-			Size = UDim2.new(0,0,0,0),
-			Position = UDim2.new(0, Main.AbsolutePosition.X + (Main.AbsoluteSize.X / 2), 0, Main.AbsolutePosition.Y + (Main.AbsoluteSize.Y / 2))
-		}):Play()
-        wait(1)
-        ScreenGui:Destroy()
+        if isOpen then
+            Utility:TweenObject(Main, {
+                Size = UDim2.new(0, 525, 0, 29) -- Сворачиваем до заголовка
+            }, 0.3)
+            close.ImageRectOffset = Vector2.new(124, 364) -- Стрелка вправо
+        else
+            Utility:TweenObject(Main, {
+                Size = UDim2.new(0, 525, 0, 318) -- Разворачиваем полностью
+            }, 0.3)
+            close.ImageRectOffset = Vector2.new(36, 364) -- Стрелка влево
+        end
+        isOpen = not isOpen
     end)
 
     MainSide.Name = "MainSide"
