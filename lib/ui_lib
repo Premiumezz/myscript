@@ -2632,10 +2632,6 @@ function Kavo.CreateLib(kavName, themeList)
         end
         return Sections
     end  
-    MainSide.Visible = true
-    pages.Visible = true
-    tabFrames.Visible = true
-    infoContainer.Visible = true
     return Tabs
 end
 return Kavo
