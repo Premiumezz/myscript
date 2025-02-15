@@ -287,7 +287,7 @@ function Kavo.CreateLib(kavName, themeList)
     minimize.LayoutOrder = 1
     minimize.Size = UDim2.new(0, 18, 0, 18)
     minimize.Image = "rbxassetid://3926305904"
-    minimize.ImageRectOffset = Vector2.new(36, 364) -- Стрелка влево
+    minimize.ImageRectOffset = Vector2.new(36, 10) -- Стрелка влево
     minimize.ImageRectSize = Vector2.new(48, 48)
 
     -- Кнопка закрытия
